@@ -1,9 +1,11 @@
+/* Ensure html and body fill the full viewport */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
+/* Fixed Header Styles */
 header {
   position: fixed;
   top: 0;
@@ -14,14 +16,14 @@ header {
   z-index: 1000;
 }
 
-/* Add top padding to the body to push content below the fixed header.
-   Adjust the value (70px here) to match the height of your header. */
+/* Body styles */
 body {
-  padding-top: 70px;
+  padding-top: 70px; /* Space for the fixed header */
   font-family: Arial, sans-serif;
+  /* You can remove text-align: center; here if you prefer to control alignment per element */
 }
 
-/* Navigation menu styling */
+/* Navigation Menu Styling */
 .main-nav ul {
   list-style: none;
   margin: 0;
@@ -42,19 +44,21 @@ body {
   color: #25D366;
 }
 
-#status {
-  display: inline-block;  /* Shrink to fit its content */
-  margin: 10px auto;      /* Center horizontally with auto margins */
-  padding: 5px 10px;      /* Adjust padding as needed */
-  background: #fff;
-  border-radius: 5px;
-  font-size: 14px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* Optional: adds a subtle shadow for visual depth */
+/* Map Container Styling */
+#map {
+  position: relative; /* So that children can be positioned absolutely relative to this container */
+  height: calc(100vh); /* Fill the remaining viewport after the header */
 }
 
-/* Map container styling.
-   The height is set to fill the remainder of the viewport. Adjust
-   the calculation if your header/status heights change. */
-#map {
-  height: calc(100% - 120px); /* 70px for header + ~50px for status (adjust as needed) */
+/* Status Bar Styling (overlay on the map, at the bottom) */
+#status {
+  position: absolute;
+  bottom: 10px;        /* 10px above the bottom edge (adjust as needed) */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white so the map is still visible underneath */
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  z-index: 1100;       /* Ensure it appears above the map */
 }
