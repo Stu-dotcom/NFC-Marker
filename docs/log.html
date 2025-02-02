@@ -71,10 +71,10 @@
                   },
                   function (error) {
                     if (error) {
-                      document.getElementById("status").textContent =
+                      document.getElementById("log-status").textContent =
                         "Failed to log location: " + error;
                     } else {
-                      document.getElementById("status").textContent =
+                      document.getElementById("log-status").textContent =
                         "Location logged successfully!";
                       // Optionally, you can redirect to the map page after a delay:
                       // setTimeout(function() { window.location.href = "map.html"; }, 1500);
@@ -83,12 +83,12 @@
                 );
             },
             function (error) {
-              document.getElementById("status").textContent =
+              document.getElementById("log-status").textContent =
                 "Error retrieving location: " + error.message;
             }
           );
         } else {
-          document.getElementById("status").textContent =
+          document.getElementById("log-status").textContent =
             "Geolocation is not supported by your browser.";
         }
       }
