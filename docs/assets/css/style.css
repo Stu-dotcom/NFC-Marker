@@ -1,27 +1,41 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #333;
+  padding: 10px 0;
+  z-index: 1000;
+}
+
+/* Add top padding to the body to push content below the fixed header.
+   Adjust the value (70px here) to match the height of your header. */
+body {
+  padding-top: 70px;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
 /* Navigation menu styling */
-.main-nav {
-    background: #333;
-    padding: 10px 0;
-  }
-  .main-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
-  .main-nav li {
-    display: inline-block;
-    margin: 0 15px;
-  }
-  .main-nav a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 16px;
-    transition: color 0.3s ease;
-  }
-  .main-nav a:hover {
-    color: #25D366;
-  }
+.main-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.main-nav li {
+  display: inline-block;
+  margin: 0 15px;
+}
+.main-nav a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+.main-nav a:hover {
+  color: #25D366;
+}
 
 /* Status message styling */
 #status {
@@ -29,15 +43,12 @@
   padding: 5px 10px;
   background: #fff;
   border-radius: 5px;
-  font-family: Arial, sans-serif;
+  font-size: 14px;
 }
 
-/* Adjust the map container to leave room for header and status */
+/* Map container styling.
+   The height is set to fill the remainder of the viewport. Adjust
+   the calculation if your header/status heights change. */
 #map {
-  height: calc(100% - 120px);  /* Adjust the 120px if your header and status combined height is different */
-  /* Alternatively, you can use margin-top if you prefer:
-  margin-top: 120px; 
-  height: calc(100% - 120px);
-  */
+  height: calc(100% - 120px); /* 70px for header + ~50px for status (adjust as needed) */
 }
-  
