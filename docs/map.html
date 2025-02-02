@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Car Location Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body, html { margin: 0; padding: 0; height: 100%; }
+    #map { height: 100%; }
+    #status { position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.8); padding: 5px; z-index: 1000; }
+  </style>
+</head>
+<body>
+  <div id="status">Loading location…</div>
+  <div id="map"></div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <script>
+    // TODO: Replace with your Firebase project configuration (same as in log.html)
+    const firebaseConfig = {
+        apiKey: "AIzaSyDrVjN9ikf2Fk75ZIH8YK-6Rq-CCOx33cw",
+        authDomain: "nfc-car.firebaseapp.com",
+        projectId: "nfc-car",
+        storageBucket: "nfc-car.firebasestorage.app",
+        messagingSenderId: "469086187259",
+        appId: "1:469086187259:web:72dbd4d85f23c68c4f0a5e",
+        measurementId: "G-7J7VRQKZQ8"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var database = firebase.database();
+
+    var map, marker;
+
+    // Initialize the map centered at the given coordinates
+    function initMap(lat, lng) {
+      map = L.map('map').setView([lat, lng], 16);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+      marker = L.marker([lat, lng]).addTo(map)
+                .bindPopup('Car parked here')
+                .openPopup();
+    }
+
+    // Listen for updates to the 'carLocation' data
+    firebase.database().ref('carLocation').on('value', function(snapshot) {
+      var data = snapshot.val();
+      if (data) {
+        var lat = data.lat;
+        var lng = data.lng;
+        document.getElementById('status').textContent = "Last updated: " + new Date(data.timestamp).toLocaleString();
+        
+        if (!map) {
+          // Initialize the map if it hasn't been done yet
+          initMap(lat, lng);
+        } else {
+          // Update the map view and marker position if the map already exists
+          map.setView([lat, lng], 16);
+          marker.setLatLng([lat, lng]).bindPopup('Car parked here').openPopup();
+        }
+      } else {
+        document.getElementById('status').textContent = "No location data available.";
+      }
+    });
+  </script>
+</body>
+</html>

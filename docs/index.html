@@ -1,61 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Car Location</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        .button { 
-            display: block; 
-            width: 80%; 
-            margin: 10px auto; 
-            padding: 15px; 
-            background: #25D366; 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 5px; 
-        }
-        .sms { background: #007bff; }
-    </style>
-    <script>
-        // Get location automatically when the page loads
-        window.onload = function() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const lat = position.coords.latitude;
-                        const lng = position.coords.longitude;
-                        const mapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
-                        const message = `My car is parked here: ${mapsLink}`;
-                        
-                        // Encode message for URLs
-                        const encodedMessage = encodeURIComponent(message);
-                        
-                        // Create links
-                        document.getElementById('whatsapp').href = 
-                            `https://wa.me/?text=${encodedMessage}`;
-                        document.getElementById('sms').href = 
-                            `sms:?body=${encodedMessage}`;
-                        
-                        // Show buttons
-                        document.getElementById('buttons').style.display = 'block';
-                        document.getElementById('loading').style.display = 'none';
-                    },
-                    (error) => {
-                        alert('Error getting location: ' + error.message);
-                    }
-                );
-            } else {
-                alert("Geolocation is not supported.");
-            }
-        };
-    </script>
+  <meta charset="UTF-8">
+  <title>Car Location Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Basic resets and styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      text-align: center;
+    }
+    header {
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #555;
+      font-size: 18px;
+      max-width: 600px;
+      margin: 0 auto 20px auto;
+    }
+    .buttons {
+      margin: 20px;
+    }
+    .button {
+      display: inline-block;
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 16px;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+    /* Button specific styling */
+    .log-button {
+      background-color: #25D366; /* WhatsApp green for logging */
+    }
+    .log-button:hover {
+      background-color: #1ebe5e;
+    }
+    .map-button {
+      background-color: #4285F4; /* Google blue for map view */
+    }
+    .map-button:hover {
+      background-color: #357ae8;
+    }
+  </style>
 </head>
 <body>
-    <p id="loading">Getting location...</p>
-    <div id="buttons" style="display: none;">
-        <a id="whatsapp" class="button" href="#">Share via WhatsApp</a>
-        <a id="sms" class="button sms" href="#">Share via SMS</a>
-    </div>
+  <header>
+    <h1>Car Location Tracker</h1>
+    <p>Welcome! This site allows you to log your car's parked location with a simple NFC tap and view the most recent logged location on an interactive map.</p>
+  </header>
+  
+  <div class="buttons">
+    <!-- Link to the page that logs the location -->
+    <a class="button log-button" href="log.html">Log Car Location</a>
+    
+    <!-- Link to the page that displays the location on a map -->
+    <a class="button map-button" href="map.html">View Car Location on Map</a>
+  </div>
 </body>
 </html>

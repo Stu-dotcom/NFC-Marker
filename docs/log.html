@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Log Car Location</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Logging Your Car's Location</h2>
+  <p id="status">Retrieving location…</p>
+
+  <!-- Firebase SDKs -->
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <!-- Firebase Realtime Database -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+  <script>
+    // TODO: Replace with your Firebase project configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDrVjN9ikf2Fk75ZIH8YK-6Rq-CCOx33cw",
+        authDomain: "nfc-car.firebaseapp.com",
+        projectId: "nfc-car",
+        storageBucket: "nfc-car.firebasestorage.app",
+        messagingSenderId: "469086187259",
+        appId: "1:469086187259:web:72dbd4d85f23c68c4f0a5e",
+        measurementId: "G-7J7VRQKZQ8"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var database = firebase.database();
+
+    // Function to log the current location
+    function logLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+          var timestamp = Date.now();
+
+          // Write the location data to Firebase under the key 'carLocation'
+          firebase.database().ref('carLocation').set({
+            lat: lat,
+            lng: lng,
+            timestamp: timestamp
+          }, function(error) {
+            if (error) {
+              document.getElementById("status").textContent = "Failed to log location: " + error;
+            } else {
+              document.getElementById("status").textContent = "Location logged successfully!";
+              // Optionally, you can redirect to the map page after a delay:
+              // setTimeout(function() { window.location.href = "map.html"; }, 1500);
+            }
+          });
+        }, function(error) {
+          document.getElementById("status").textContent = "Error retrieving location: " + error.message;
+        });
+      } else {
+        document.getElementById("status").textContent = "Geolocation is not supported by your browser.";
+      }
+    }
+
+    // Start the process when the page loads
+    window.onload = logLocation;
+  </script>
+</body>
+</html>
