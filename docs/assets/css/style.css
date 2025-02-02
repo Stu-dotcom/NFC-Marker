@@ -42,13 +42,14 @@ body {
   color: #25D366;
 }
 
-/* Status message styling */
 #status {
-  margin: 10px;
-  padding: 5px 10px;
+  display: inline-block;  /* Shrink to fit its content */
+  margin: 10px auto;      /* Center horizontally with auto margins */
+  padding: 5px 10px;      /* Adjust padding as needed */
   background: #fff;
   border-radius: 5px;
   font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* Optional: adds a subtle shadow for visual depth */
 }
 
 /* Map container styling.
